@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 // 
 
-module(
+module Gcd(
 	input [15:0] d1,
 	input [15:0] d2,
 	input clk,
