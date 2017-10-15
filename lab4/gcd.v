@@ -28,12 +28,13 @@ module Gcd(
 	input clk,
 	input rst,
 	output [15:0] gcd,
-	output finished_flag;
+	output finished_flag
 ); 
 reg [15:0] 	tmp1;
 reg [15:0] 	tmp2;
 reg [15:0] 	tmp1_q;
 reg [15:0] 	tmp2_q;
+reg [15:0]  result_q;
 reg [1:0]	flag_tmp;
 reg [1:0]	flag_tmp_q;
 reg enable;
@@ -41,6 +42,7 @@ always@(clk)begin
 	if(~rst)begin
 		tmp1 <= 16'd0;
 		tmp2 <= 16'd0;
+		result_q <= 16'd0;
 		flag_tmp <= 2'b00;
 		enable <= 1'b0;
 	end
@@ -55,11 +57,12 @@ always@(clk)begin
 		else if(flag_tmp_q == 2'b01)begin
 			if(tmp1_q==tmp2_q && tmp1_q != 0)begin
 				flag_tmp <= 2'b00;
+				result_q <= tmp2_q;
 				enable <= 1'b1;
 			end
 			else if(tmp1_q > tmp2_q)begin
-				tmp2 <= tmp1_q - tmp2_q;
-				tmp1 <= tmp2_q;
+				tmp1 <= tmp1_q - tmp2_q;
+				tmp2 <= tmp2_q;
 			end
 			else if(tmp1_q < tmp2_q)begin
 				tmp2 <= tmp2_q - tmp1_q;
@@ -75,6 +78,6 @@ always@(clk)begin
 	flag_tmp_q <= flag_tmp;
 end
 
-assign gcd = tmp2_q;
+assign gcd = result_q;
 assign finished_flag = enable;
 endmodule
