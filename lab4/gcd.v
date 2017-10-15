@@ -50,6 +50,7 @@ always@(clk)begin
 			tmp1 <= d1;
 			tmp2 <= d2;
 			flag_tmp <= 2'b01;
+			enable <= 1'b0;
 		end
 		else if(flag_tmp_q == 2'b01)begin
 			if(tmp1_q==tmp2_q && tmp1_q != 0)begin
